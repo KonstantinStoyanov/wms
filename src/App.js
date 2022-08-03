@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Home from "./components/Home/Home";
+import Users from "./components/Users/Users";
+import AddProduct from "./components/AddProduct/AddProduct";
+import MoveProduct from "./components/MoveProduct/MoveProduct";
+import FindProduct from "./components/FindProduct/FindProduct";
+import Login from "./components/Login/Login";
+import "./wms.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/move-product" element={<MoveProduct />} />
+        <Route path="/find-product" element={<FindProduct />} />
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/users" element={<Users />} />
+
+        {/* <Route path="/login" element={<Login />} />
+      <Route
+        path="/register"
+        element={
+          <Suspense fallback={<span>Loading....</span>}>
+            <Register />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/create"
+        element={<CreateGame addGameHandler={addGameHandler} />}
+      />
+      <Route path="/catalog" element={<Catalog games={games} />} />
+      <Route
+        path="/catalog/:gameId"
+        element={<GameDetails games={games} addComment={addComment} />}
+      /> */}
+      </Routes>
     </div>
   );
 }
