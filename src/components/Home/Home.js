@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import "../../wms.css";
+import { UserAuth } from "../../context/AuthContext";
 const Home = () => {
+  const { user } = UserAuth();
+  console.log(user);
   return (
     <main id="wms-index" className="wms-index">
       <div className="header">

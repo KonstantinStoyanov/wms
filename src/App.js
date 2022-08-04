@@ -6,19 +6,21 @@ import MoveProduct from "./components/MoveProduct/MoveProduct";
 import FindProduct from "./components/FindProduct/FindProduct";
 import Login from "./components/Login/Login";
 import "./wms.css";
+import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <div className="container">
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/move-product" element={<MoveProduct />} />
-        <Route path="/find-product" element={<FindProduct />} />
-        <Route path="/add-product" element={<AddProduct />} />
-        <Route path="/users" element={<Users />} />
+      <AuthContextProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/move-product" element={<MoveProduct />} />
+          <Route path="/find-product" element={<FindProduct />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/users" element={<Users />} />
 
-        {/* <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} />
       <Route
         path="/register"
         element={
@@ -36,7 +38,8 @@ function App() {
         path="/catalog/:gameId"
         element={<GameDetails games={games} addComment={addComment} />}
       /> */}
-      </Routes>
+        </Routes>
+      </AuthContextProvider>
     </div>
   );
 }
