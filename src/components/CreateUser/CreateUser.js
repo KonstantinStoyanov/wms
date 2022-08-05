@@ -1,28 +1,26 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { UserAuth } from "../../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const { createNewUser } = UserAuth();
+const CreateUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
-
-  const handleSubmit = async (e) => {
+  const handleSubmitCreate = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      await signIn(email, password);
+      await createNewUser(email, password, "kosi");
       navigate("/");
     } catch (e) {
       setError(e.message);
       console.log(e.message);
     }
   };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmitCreate}>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Email Address</label>
         <input
@@ -40,10 +38,9 @@ const Login = () => {
         />
       </div>
       <button className="border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white">
-        Sign In
+        create
       </button>
     </form>
   );
 };
-
-export default Login;
+export default CreateUser;

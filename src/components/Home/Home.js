@@ -1,18 +1,39 @@
-import { Link } from "react-router-dom";
-import "../../wms.css";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
+
+import Login from "../Login/Login";
 const Home = () => {
-  const { user } = UserAuth();
-  console.log(user);
+  const { user, logout } = UserAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+      console.log("You are logged out");
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <main id="wms-index" className="wms-index">
       <div className="header">
         <h1>Warehouse Management</h1>
-        <div className="profile">
-          <div className="profile_picture"></div>
-          <h3 className="profile_name">Konstantin Stoyanov</h3>
-          <p className="profile_title">Warehouse staff</p>
-        </div>
+
+        {user?.uid ? (
+          <div className="profile">
+            <div className="profile_picture"></div>
+            <h3 className="profile_name">Konstantin Stoyanov</h3>
+            <p className="profile_title">Warehouse staff</p>
+
+            <button onClick={handleLogout} className="border px-6 py-2 my-4">
+              Logout
+            </button>
+          </div>
+        ) : (
+          <Login />
+        )}
       </div>
       <ul className="pages-container">
         <li className="pages-item">
