@@ -1,9 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
 
 import Login from "../Login/Login";
+import CreateUser from "../CreateUser/CreateUser";
+import * as userService from "../../services/userService";
 const Home = () => {
   const { user, logout } = UserAuth();
+  const [showLogin, setShowLogin] = useState(true);
+  console.log(user);
+  // const { currentUserData, setCurrentUserData } = useState(() => {
+  //   if (user) {
+  //     return getUser(user.uid);
+  //   } else {
+  //     return null;
+  //   }
+  // });
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -16,6 +30,39 @@ const Home = () => {
     }
   };
 
+  const handleShowLogin = () => {
+    setShowLogin((prevShowLogin) => !prevShowLogin);
+  };
+  // const getUser = async () => {
+  //   const usersCollectionRef = collection(db, "user", `${user.uid}`);
+  //   const data = await getDocs(usersCollectionRef);
+  //   console.log(data);
+  // };
+
+  // if (user?.uid) {
+  //   getUser();
+  // }
+  // const getUser = async (userId) => {
+  //   const userData = await userService.getUser(userId);
+  //   // setCurrentUserData;
+  //   return userData;
+  // };
+  // useEffect(() => {
+  // if (user) {
+  //  return setCurrentUserData = getUser(user.uid);
+  // }},[]);
+  // console.log(currentUser);
+  // useEffect(() => {
+  //   let userData;
+  //   if (user) {
+  //     userData = userService.getUser(user.uid);
+  //   }
+
+  //   return () => {
+  //     console.log(userData);
+  //   };
+  // }, []);
+
   return (
     <main id="wms-index" className="wms-index">
       <div className="header">
@@ -24,17 +71,20 @@ const Home = () => {
         {user?.uid ? (
           <div className="profile">
             <div className="profile_picture"></div>
-            <h3 className="profile_name">Konstantin Stoyanov</h3>
-            <p className="profile_title">Warehouse staff</p>
+            <h3 className="profile_name">{user.name}</h3>
+            <p className="profile_title">{user.title}</p>
 
             <button onClick={handleLogout} className="border px-6 py-2 my-4">
               Logout
             </button>
           </div>
+        ) : showLogin ? (
+          <Login handleShowLogin={handleShowLogin} />
         ) : (
-          <Login />
+          <CreateUser handleShowLogin={handleShowLogin} />
         )}
       </div>
+
       <ul className="pages-container">
         <li className="pages-item">
           <Link to="/move-product" className="pages-link">

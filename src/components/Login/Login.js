@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
-const Login = () => {
+const Login = ({ handleShowLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -23,6 +23,7 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <p>Login to account</p>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Email Address</label>
         <input
@@ -41,6 +42,13 @@ const Login = () => {
       </div>
       <button className="border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white">
         Sign In
+      </button>
+
+      <button
+        className="border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white"
+        onClick={() => handleShowLogin()}
+      >
+        Go to Sign Up Form
       </button>
     </form>
   );
