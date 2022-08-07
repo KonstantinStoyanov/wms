@@ -1,3 +1,6 @@
+# The project is a web app for warehouse management. Move product from warehouse->shelf to another.Can create products,shelves and warehouse. Management from different type users(Worker,Office Worker and Admin). App have guest view.
+For back-end is use firebase.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
