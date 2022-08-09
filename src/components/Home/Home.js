@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -10,7 +10,22 @@ import * as userService from "../../services/userService";
 const Home = () => {
   const { user, logout } = UserAuth();
   const [showLogin, setShowLogin] = useState(true);
-  console.log(user);
+  const { state } = useLocation();
+  const [showAuth, setShowAuth] = useState(
+    state?.showAuth && state.showAuth != null ? state.showAuth : false
+  );
+  console.log(showAuth);
+  // console.log(state);
+  // console.log(state.showAuth);
+
+  // let showAuth = state.showAuth
+  // console.log(state.showAuth);
+  // const test = state?.test || "/";
+  // console.log(isLogin.state);
+  // console.log(state, "location");
+  // const location = useNavigationState((state) => state);
+  // console.log(location);
+
   // const { currentUserData, setCurrentUserData } = useState(() => {
   //   if (user) {
   //     return getUser(user.uid);
@@ -24,6 +39,7 @@ const Home = () => {
     try {
       await logout();
       navigate("/");
+      handleChangeShowAuth();
       console.log("You are logged out");
     } catch (e) {
       console.log(e.message);
@@ -32,7 +48,12 @@ const Home = () => {
 
   const handleShowLogin = () => {
     setShowLogin((prevShowLogin) => !prevShowLogin);
+    handleChangeShowAuth();
   };
+  const handleChangeShowAuth = () => {
+    setShowAuth((prevShowAuth) => !prevShowAuth);
+  };
+
   // const getUser = async () => {
   //   const usersCollectionRef = collection(db, "user", `${user.uid}`);
   //   const data = await getDocs(usersCollectionRef);
@@ -62,12 +83,13 @@ const Home = () => {
   //     console.log(userData);
   //   };
   // }, []);
-
+  console.log(user);
   return (
     <main id="wms-index" className="wms-index">
       <div className="header">
         <h1>Warehouse Management</h1>
-
+        {/* <h1>{location.state}</h1> */}
+        {/* {showAuth ? : } */}
         {user?.uid ? (
           <div className="profile">
             <div className="profile_picture"></div>
@@ -78,11 +100,28 @@ const Home = () => {
               Logout
             </button>
           </div>
-        ) : showLogin ? (
-          <Login handleShowLogin={handleShowLogin} />
+        ) : showAuth ? (
+          showLogin ? (
+            <Login handleShowLogin={handleShowLogin} />
+          ) : (
+            <CreateUser handleShowLogin={handleShowLogin} />
+          )
         ) : (
-          <CreateUser handleShowLogin={handleShowLogin} />
+          <>
+            <h3>Welcome Guest</h3>
+            <button
+              onClick={() => handleChangeShowAuth()}
+              className="border px-6 py-2 my-4"
+            >
+              Log in
+            </button>
+          </>
         )}
+        {/* showLogin ? (
+        <Login handleShowLogin={handleShowLogin} />
+        ) : (
+        <CreateUser handleShowLogin={handleShowLogin} />
+        )} */}
       </div>
 
       <ul className="pages-container">
@@ -139,6 +178,22 @@ const Home = () => {
               </div>
             </div>
           </Link>
+        </li>
+
+        <li className="pages-item">
+          <a href="/" className="pages-link" onClick={handleLogout}>
+            <div className="pages-card">
+              <div className="pages-card_content">
+                <h3>Logout</h3>
+                <p>
+                  Time to go home and let someone else handle the warehouse.
+                </p>
+              </div>
+              <div className="pages-card_img">
+                <img src="/images/storage-worker.jpg" alt="" />
+              </div>
+            </div>
+          </a>
         </li>
       </ul>
     </main>

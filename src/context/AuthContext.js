@@ -78,10 +78,13 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser != null) {
         Promise.allSettled([userService.getUser(currentUser.uid)]).then(
-          (data) => (currentUser.type = data.type)
+          (data) => {
+            currentUser.type = data.type;
+            return setUser(currentUser);
+          }
         );
       }
-      setUser(currentUser);
+
       console.log(currentUser, "change");
     });
     return () => {

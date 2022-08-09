@@ -18,6 +18,7 @@ const userService = async (method, userId, data) => {
       case "get":
         console.log("get");
         response = await getDoc(col, userId);
+        console.log(response.data());
         return response.data();
 
       case "set":
