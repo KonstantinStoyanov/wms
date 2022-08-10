@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
 const Login = ({ handleShowLogin }) => {
@@ -8,13 +8,14 @@ const Login = ({ handleShowLogin }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { signIn } = UserAuth();
+  const { state } = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await signIn(email, password);
-      navigate("/");
+      navigate(state?.path || "/");
     } catch (e) {
       setError(e.message);
       console.log(e.message);
@@ -22,7 +23,7 @@ const Login = ({ handleShowLogin }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} autoComplete="new-password">
       <p>Login to account</p>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Email Address</label>
@@ -30,6 +31,7 @@ const Login = ({ handleShowLogin }) => {
           onChange={(e) => setEmail(e.target.value)}
           className="border p-3"
           type="email"
+          autoComplete="new-password"
         />
       </div>
       <div className="flex flex-col py-2">
@@ -38,6 +40,7 @@ const Login = ({ handleShowLogin }) => {
           onChange={(e) => setPassword(e.target.value)}
           className="border p-3"
           type="password"
+          autoComplete="new-password"
         />
       </div>
       <button className="border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white">

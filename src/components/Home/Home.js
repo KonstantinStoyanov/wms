@@ -9,12 +9,13 @@ import CreateUser from "../CreateUser/CreateUser";
 import * as userService from "../../services/userService";
 const Home = () => {
   const { user, logout } = UserAuth();
-  const [showLogin, setShowLogin] = useState(true);
-  const { state } = useLocation();
-  const [showAuth, setShowAuth] = useState(
-    state?.showAuth && state.showAuth != null ? state.showAuth : false
-  );
-  console.log(showAuth);
+
+  // const [showLogin, setShowLogin] = useState(true);
+  // const { state } = useLocation();
+  // const [showAuth, setShowAuth] = useState(
+  //   state?.showAuth && state.showAuth != null ? state.showAuth : false
+  // );
+  // console.log(showAuth);
   // console.log(state);
   // console.log(state.showAuth);
 
@@ -38,21 +39,17 @@ const Home = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/");
-      handleChangeShowAuth();
+      // navigate("/");
+      // handleChangeShowAuth();
       console.log("You are logged out");
     } catch (e) {
       console.log(e.message);
     }
   };
 
-  const handleShowLogin = () => {
-    setShowLogin((prevShowLogin) => !prevShowLogin);
-    handleChangeShowAuth();
-  };
-  const handleChangeShowAuth = () => {
-    setShowAuth((prevShowAuth) => !prevShowAuth);
-  };
+  // const handleChangeShowAuth = () => {
+  //   setShowAuth((prevShowAuth) => !prevShowAuth);
+  // };
 
   // const getUser = async () => {
   //   const usersCollectionRef = collection(db, "user", `${user.uid}`);
@@ -95,26 +92,13 @@ const Home = () => {
             <div className="profile_picture"></div>
             <h3 className="profile_name">{user.name}</h3>
             <p className="profile_title">{user.title}</p>
-
-            <button onClick={handleLogout} className="border px-6 py-2 my-4">
-              Logout
-            </button>
           </div>
-        ) : showAuth ? (
-          showLogin ? (
-            <Login handleShowLogin={handleShowLogin} />
-          ) : (
-            <CreateUser handleShowLogin={handleShowLogin} />
-          )
         ) : (
           <>
             <h3>Welcome Guest</h3>
-            <button
-              onClick={() => handleChangeShowAuth()}
-              className="border px-6 py-2 my-4"
-            >
+            <Link to="/login" className="border px-6 py-2 my-4">
               Log in
-            </button>
+            </Link>
           </>
         )}
         {/* showLogin ? (
@@ -179,22 +163,25 @@ const Home = () => {
             </div>
           </Link>
         </li>
-
-        <li className="pages-item">
-          <a href="/" className="pages-link" onClick={handleLogout}>
-            <div className="pages-card">
-              <div className="pages-card_content">
-                <h3>Logout</h3>
-                <p>
-                  Time to go home and let someone else handle the warehouse.
-                </p>
+        {user ? (
+          <li className="pages-item">
+            <a href="/" className="pages-link" onClick={handleLogout}>
+              <div className="pages-card">
+                <div className="pages-card_content">
+                  <h3>Logout</h3>
+                  <p>
+                    Time to go home and let someone else handle the warehouse.
+                  </p>
+                </div>
+                <div className="pages-card_img">
+                  <img src="/images/storage-worker.jpg" alt="" />
+                </div>
               </div>
-              <div className="pages-card_img">
-                <img src="/images/storage-worker.jpg" alt="" />
-              </div>
-            </div>
-          </a>
-        </li>
+            </a>
+          </li>
+        ) : (
+          ""
+        )}
       </ul>
     </main>
   );

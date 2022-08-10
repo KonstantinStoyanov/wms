@@ -1,5 +1,6 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./components/Home/Home";
+import AuthPage from "./components/AuthPage/AuthPage";
 import Users from "./components/Users/Users";
 import AddProduct from "./components/AddProduct/AddProduct";
 import MoveProduct from "./components/MoveProduct/MoveProduct";
@@ -16,6 +17,7 @@ function App() {
       <AuthContextProvider>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<AuthPage />} />
           <Route path="/" element={<ProtectedRoutes />}>
             <Route path="move-product" element={<MoveProduct />} />
             <Route path="find-product" element={<FindProduct />} />

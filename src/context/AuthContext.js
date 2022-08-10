@@ -16,12 +16,14 @@ import {
 import { auth, db } from "../firebase.js";
 import * as userService from "../services/userService";
 import { async } from "@firebase/util";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  // const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+  const { state } = useLocation();
   const getUserData = async (userId) => {
     let response = await userService.getUser(userId);
 
@@ -35,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
         email,
         password
       );
+
       // const { user } = await auth.createUser({
       //   email: "user@example.com",
       //   emailVerified: false,
@@ -45,6 +48,7 @@ export const AuthContextProvider = ({ children }) => {
       //   disabled: false,
       // });
       setUser(user);
+
       await userService.setUser(user.uid, {
         email: user.email,
         uid: user.uid,
@@ -56,14 +60,6 @@ export const AuthContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-
-    // return createUserWithEmailAndPassword(
-    //   auth,
-    //   email,
-    //   password,
-    //   `type:"${type}"`
-    // );
-    //  createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signIn = (email, password) => {
@@ -71,7 +67,9 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logout = () => {
-    return signOut(auth);
+    return signOut(auth).then(() => {
+      navigate("/");
+    });
   };
 
   useEffect(() => {
@@ -84,8 +82,8 @@ export const AuthContextProvider = ({ children }) => {
           }
         );
       }
-
-      console.log(currentUser, "change");
+      console.log(state?.path || "/", "location");
+      return navigate(state?.path || "/");
     });
     return () => {
       unsubscribe();
