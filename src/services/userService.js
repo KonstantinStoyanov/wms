@@ -1,7 +1,8 @@
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import {
   doc,
   getDoc,
+  getDocs,
   setDoc,
   deleteField,
   updateDoc,
@@ -9,29 +10,30 @@ import {
   collection,
 } from "firebase/firestore";
 const userService = async (method, userId, data) => {
-  const usersCollectionRef = doc(db, "users", userId);
-  let col = doc(db, "users", userId);
+  // const { user } = UserAuth();
+  const userCollectionRef = doc(db, "users", userId);
   try {
     let response;
-
+    let data;
+    // let userCollectionRef;
     switch (method) {
       case "get":
-        console.log("get");
-        response = await getDoc(col, userId);
-        console.log(response.data());
-        return response.data();
+        response = await getDoc(userCollectionRef).then((querySnapshot) => {
+          return querySnapshot.data();
+        });
+        return response;
 
       case "set":
         console.log("set");
-        response = await setDoc(usersCollectionRef, data);
+        response = setDoc(userCollectionRef, data);
         break;
       case "update":
         console.log("update");
-        response = await updateDoc(usersCollectionRef, { data });
+        response = updateDoc(userCollectionRef, { data });
         break;
       case "delete":
         console.log("delete");
-        response = await deleteDoc(usersCollectionRef);
+        response = deleteDoc(userCollectionRef);
         break;
       default:
         console.log("No method " + method + " exist");

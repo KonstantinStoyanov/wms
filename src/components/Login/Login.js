@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
 const Login = ({ handleShowLogin }) => {
@@ -8,14 +8,13 @@ const Login = ({ handleShowLogin }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { signIn } = UserAuth();
-  const { state } = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await signIn(email, password);
-      navigate(state?.path || "/");
+      navigate("/");
     } catch (e) {
       setError(e.message);
       console.log(e.message);
@@ -29,6 +28,7 @@ const Login = ({ handleShowLogin }) => {
         <label className="py-2 font-medium">Email Address</label>
         <input
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
           className="border p-3"
           type="email"
           autoComplete="new-password"
@@ -38,6 +38,7 @@ const Login = ({ handleShowLogin }) => {
         <label className="py-2 font-medium">Password</label>
         <input
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
           className="border p-3"
           type="password"
           autoComplete="new-password"

@@ -1,92 +1,24 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
-import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-import Login from "../Login/Login";
-import CreateUser from "../CreateUser/CreateUser";
-import * as userService from "../../services/userService";
 const Home = () => {
   const { user, logout } = UserAuth();
-
-  // const [showLogin, setShowLogin] = useState(true);
-  // const { state } = useLocation();
-  // const [showAuth, setShowAuth] = useState(
-  //   state?.showAuth && state.showAuth != null ? state.showAuth : false
-  // );
-  // console.log(showAuth);
-  // console.log(state);
-  // console.log(state.showAuth);
-
-  // let showAuth = state.showAuth
-  // console.log(state.showAuth);
-  // const test = state?.test || "/";
-  // console.log(isLogin.state);
-  // console.log(state, "location");
-  // const location = useNavigationState((state) => state);
-  // console.log(location);
-
-  // const { currentUserData, setCurrentUserData } = useState(() => {
-  //   if (user) {
-  //     return getUser(user.uid);
-  //   } else {
-  //     return null;
-  //   }
-  // });
-  const navigate = useNavigate();
+  // const [isLoading, setLoading] = useState(false);
 
   const handleLogout = async () => {
     try {
       await logout();
-      // navigate("/");
-      // handleChangeShowAuth();
-      console.log("You are logged out");
     } catch (e) {
       console.log(e.message);
     }
   };
-
-  // const handleChangeShowAuth = () => {
-  //   setShowAuth((prevShowAuth) => !prevShowAuth);
-  // };
-
-  // const getUser = async () => {
-  //   const usersCollectionRef = collection(db, "user", `${user.uid}`);
-  //   const data = await getDocs(usersCollectionRef);
-  //   console.log(data);
-  // };
-
-  // if (user?.uid) {
-  //   getUser();
-  // }
-  // const getUser = async (userId) => {
-  //   const userData = await userService.getUser(userId);
-  //   // setCurrentUserData;
-  //   return userData;
-  // };
-  // useEffect(() => {
-  // if (user) {
-  //  return setCurrentUserData = getUser(user.uid);
-  // }},[]);
-  // console.log(currentUser);
-  // useEffect(() => {
-  //   let userData;
-  //   if (user) {
-  //     userData = userService.getUser(user.uid);
-  //   }
-
-  //   return () => {
-  //     console.log(userData);
-  //   };
-  // }, []);
-  console.log(user);
   return (
     <main id="wms-index" className="wms-index">
       <div className="header">
         <h1>Warehouse Management</h1>
-        {/* <h1>{location.state}</h1> */}
-        {/* {showAuth ? : } */}
+
         {user?.uid ? (
           <div className="profile">
             <div className="profile_picture"></div>
@@ -101,11 +33,6 @@ const Home = () => {
             </Link>
           </>
         )}
-        {/* showLogin ? (
-        <Login handleShowLogin={handleShowLogin} />
-        ) : (
-        <CreateUser handleShowLogin={handleShowLogin} />
-        )} */}
       </div>
 
       <ul className="pages-container">
@@ -165,7 +92,7 @@ const Home = () => {
         </li>
         {user ? (
           <li className="pages-item">
-            <a href="/" className="pages-link" onClick={handleLogout}>
+            <Link to="/" className="pages-link" onClick={handleLogout}>
               <div className="pages-card">
                 <div className="pages-card_content">
                   <h3>Logout</h3>
@@ -177,7 +104,7 @@ const Home = () => {
                   <img src="/images/storage-worker.jpg" alt="" />
                 </div>
               </div>
-            </a>
+            </Link>
           </li>
         ) : (
           ""

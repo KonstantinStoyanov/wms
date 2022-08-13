@@ -10,7 +10,7 @@ const Users = () => {
     const getUsers = async () => {
       const usersCollectionRef = collection(db, "users");
       const data = await getDocs(usersCollectionRef);
-      // console.log(data);
+
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getUsers();

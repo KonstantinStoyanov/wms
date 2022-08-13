@@ -3,33 +3,21 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
 } from "firebase/auth";
-// import {
-//   doc,
-//   getDocs,
-//   setDoc,
-//   deleteField,
-//   updateDoc,
-//   deleteDoc,
-// } from "firebase/firestore";
-import { auth, db } from "../firebase.js";
+import { auth } from "../firebase.js";
 import * as userService from "../services/userService";
-import { async } from "@firebase/util";
-import { Navigate, useNavigate, useLocation } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner.js";
 const UserContext = createContext();
+export const UserAuth = () => {
+  return useContext(UserContext);
+};
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const getUserData = async (userId) => {
-    let response = await userService.getUser(userId);
 
-    const data = await response;
-    return data;
-  };
   const createNewUser = async (email, password, name, type) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -38,15 +26,6 @@ export const AuthContextProvider = ({ children }) => {
         password
       );
 
-      // const { user } = await auth.createUser({
-      //   email: "user@example.com",
-      //   emailVerified: false,
-      //   phoneNumber: "+11234567890",
-      //   password: "secretPassword",
-      //   displayName: "John Doe",
-      //   photoURL: "http://www.example.com/12345678/photo.png",
-      //   disabled: false,
-      // });
       setUser(user);
 
       await userService.setUser(user.uid, {
@@ -55,8 +34,6 @@ export const AuthContextProvider = ({ children }) => {
         name: name,
         type: type,
       });
-
-      // await setDoc(doc(db, "users", user.uid), );
     } catch (error) {
       console.log(error);
     }
@@ -73,30 +50,26 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       if (currentUser != null) {
-        Promise.allSettled([userService.getUser(currentUser.uid)]).then(
-          (data) => {
-            currentUser.type = data.type;
-            return setUser(currentUser);
-          }
-        );
+        return userService.getUser(currentUser.uid).then((data) => {
+          currentUser = { ...currentUser, data };
+          setUser(currentUser);
+          setLoading(false);
+          return;
+        });
       }
-      console.log(state?.path || "/", "location");
-      return navigate(state?.path || "/");
+      setUser(currentUser);
+      setLoading(false);
+      return;
     });
-    return () => {
-      unsubscribe();
-    };
+
+    return unsubscribe;
   }, []);
 
   return (
     <UserContext.Provider value={{ createNewUser, user, logout, signIn }}>
-      {children}
+      {!loading ? children : <LoadingSpinner />}
     </UserContext.Provider>
   );
-};
-
-export const UserAuth = () => {
-  return useContext(UserContext);
 };

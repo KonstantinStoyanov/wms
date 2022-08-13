@@ -12,11 +12,15 @@ import { UserAuth } from "../../context/AuthContext";
 const ProtectedRoutes = (props) => {
   const { user } = UserAuth();
   const location = useLocation();
-  const { showAuth } = true;
-  return user != null ? (
+  const showAuth = true;
+  return user && user?.uid != null ? (
     <Outlet />
   ) : (
-    <Navigate to="/login" state={{ showAuth, path: location.pathname }} />
+    <Navigate
+      to="/login"
+      replaced
+      state={{ showAuth, path: location.pathname }}
+    />
   );
 };
 
