@@ -14,6 +14,7 @@ const Home = () => {
       console.log(e.message);
     }
   };
+  console.log(user);
   return (
     <main id="wms-index" className="wms-index">
       <div className="header">
@@ -22,14 +23,14 @@ const Home = () => {
         {user?.uid ? (
           <div className="profile">
             <div className="profile_picture"></div>
-            <h3 className="profile_name">{user.name}</h3>
-            <p className="profile_title">{user.title}</p>
+            <h3 className="profile_name">Welcome {user.data.name}</h3>
+            <p className="profile_title">Type: {user.data.type}</p>
           </div>
         ) : (
           <>
             <h3>Welcome Guest</h3>
-            <Link to="/login" className="border px-6 py-2 my-4">
-              Log in
+            <Link to="/login" className="login-btn">
+              Login
             </Link>
           </>
         )}

@@ -22,7 +22,11 @@ const Login = ({ handleShowLogin }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="new-password">
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="new-password"
+      className="login-form"
+    >
       <p>Login to account</p>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Email Address</label>

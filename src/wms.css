@@ -440,3 +440,38 @@ span.serial {
   padding-bottom: 50px;
   max-height: calc(100vh - 250px);
 }
+.login-btn {
+  background: #fff;
+  padding: 5px 20px;
+  border-radius: 6px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+  color: #000;
+}
+.login-form {
+  text-align: center;
+  padding: 50px;
+  background-image: linear-gradient(
+    to bottom,
+    #14213d 0%,
+    rgba(20, 33, 61, 0.8) 100%
+  );
+  color: #e5e5e5;
+  font-weight: 600;
+}
+.login-form > div {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 250px;
+  margin-bottom: 10px;
+  gap: 8px;
+  max-width: 250px;
+  margin: 0 auto 16px;
+}
+.login-form p {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 700;
+}
