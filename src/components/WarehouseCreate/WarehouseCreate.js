@@ -11,7 +11,8 @@ export default function WarehouseCreate({ refreshWarehouses, openModal }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(name, serial);
-    let data = { name, serial };
+    let shelves = [];
+    let data = { name, serial, shelves };
     const rest = warehouseService.setWarehouse(data, data.serial);
 
     refreshWarehouses();

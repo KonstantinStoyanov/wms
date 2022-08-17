@@ -12,8 +12,10 @@ export default function ShelfCreate({ refreshWarehouses, openModal, id }) {
     e.preventDefault();
     console.log(name, serial);
 
-    let data = { shelves: { name, serial } };
+    // let data = { name, serial };
 
+    // let data = { shelves: [{ name: name, serial: serial }] };
+    let data = { name, serial };
     const rest = warehouseService.updateWarehouse(data, id);
 
     refreshWarehouses();

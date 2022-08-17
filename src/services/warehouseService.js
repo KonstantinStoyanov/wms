@@ -8,6 +8,7 @@ import {
   updateDoc,
   deleteDoc,
   collection,
+  arrayUnion,
 } from "firebase/firestore";
 
 const warehouseService = async (method, newData, id) => {
@@ -36,7 +37,10 @@ const warehouseService = async (method, newData, id) => {
         break;
       case "update":
         console.log("update");
-        response = updateDoc(warehousesCollectionRef, { newData });
+
+        response = updateDoc(warehousesCollectionCurrentRef, {
+          shelves: arrayUnion(newData),
+        });
         break;
       case "delete":
         console.log("delete");

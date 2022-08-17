@@ -16,7 +16,7 @@ const ShelvesList = ({ shelves, warehouse }) => {
       <ul>
         {shelves
           ? shelves.map((shelf) => (
-              <li key={shelf.id}>
+              <li key={shelf.serial}>
                 <div>Name:{shelf.name}</div>
                 <div>Serial:{shelf.serial}</div>
               </li>
