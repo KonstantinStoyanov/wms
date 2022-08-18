@@ -25,8 +25,8 @@ function App() {
 
             <Route path="/*" element={<ProtectedRoutes />}>
               <Route path="move-product" element={<MoveProduct />} />
-              <Route path="find-product" element={<FindProduct />} />
-              <Route path="add-product" element={<AddProduct />} />
+              <Route path="product" element={<FindProduct />} />
+              <Route path="warehouse" element={<AddProduct />} />
               <Route path="users" element={<Users />} />
             </Route>
           </Routes>

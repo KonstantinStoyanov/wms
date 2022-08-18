@@ -10,6 +10,7 @@ const ShelvesList = ({ shelves, warehouse }) => {
   const refreshWarehouses = () => {
     return updateValues();
   };
+  console.log(shelves);
   return (
     <>
       <>{warehouse.serial}</>

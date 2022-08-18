@@ -51,7 +51,7 @@ const Home = () => {
           </Link>
         </li>
         <li className="pages-item">
-          <Link to="/find-product" className="pages-link">
+          <Link to="/product" className="pages-link">
             <div className="pages-card">
               <div className="pages-card_content">
                 <h3>Find Product</h3>
@@ -64,11 +64,11 @@ const Home = () => {
           </Link>
         </li>
         <li className="pages-item">
-          <Link to="/add-product" className="pages-link">
+          <Link to="/warehouse" className="pages-link">
             <div className="pages-card">
               <div className="pages-card_content">
-                <h3>Add Product </h3>
-                <p>Track the movements history of a product.</p>
+                <h3>Warehouse Management </h3>
+                <p>Create warehouses and shelves</p>
               </div>
               <div className="pages-card_img">
                 <img src="/images/storage-worker.jpg" alt="" />
