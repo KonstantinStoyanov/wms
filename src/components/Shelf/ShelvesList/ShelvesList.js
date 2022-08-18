@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ShelfCreate from "../ShelfCreate/ShelfCreate";
-import { WarehouseData } from "../../context/WarehouseContext";
+import { WarehouseData } from "../../../context/WarehouseContext";
 const ShelvesList = ({ shelves, warehouse }) => {
   const { updateValues } = WarehouseData();
   const [showModal, setShowModal] = useState(false);
@@ -35,21 +35,6 @@ const ShelvesList = ({ shelves, warehouse }) => {
         ) : null}
       </>
     </>
-    // <>
-    //   <>{shelves}</>
-    //   <li key={warehouse.id}>
-    //   <Warehouse warehouse={warehouse} />
-    // </li>
-    //   <>
-    //       <button onClick={openModal}>Create warehouse</button>
-    //       {showModal ? (
-    //         <WarehouseCreate
-    //           openModal={openModal}
-    //           refreshWarehouses={refreshWarehouses}
-    //         />
-    //       ) : null}
-    //     </>
-    // </>
   );
 };
 export default ShelvesList;

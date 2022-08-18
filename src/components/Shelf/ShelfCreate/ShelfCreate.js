@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import * as warehouseService from "../../services/warehouseService";
-import { UserAuth } from "../../context/AuthContext";
+import * as warehouseService from "../../../services/warehouseService";
+import { UserAuth } from "../../../context/AuthContext";
 
 export default function ShelfCreate({ refreshWarehouses, openModal, id }) {
   const [errors, setErrors] = useState({});

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ShelvesList from "../ShelvesList/ShelvesList";
+import ShelvesList from "../../Shelf/ShelvesList/ShelvesList";
 const Warehouse = ({ warehouse }) => {
   const [showShelf, setShowShelf] = useState(false);
 

@@ -1,27 +1,28 @@
-import { useState } from "react";
-import * as productService from "../../services/productService";
+import { useContext, useState } from "react";
+import * as warehouseService from "../../../services/warehouseService";
+import { UserAuth } from "../../../context/AuthContext";
 
-export default function ProductCreate({ refreshProducts, openModal }) {
+export default function WarehouseCreate({ refreshWarehouses, openModal }) {
   const [errors, setErrors] = useState({});
+  const { user } = UserAuth();
 
   const [name, setName] = useState("");
   const [serial, setSerial] = useState("");
-  const [description, setDescription] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(name, serial);
     let shelves = [];
-    let data = { name, serial, description, shelves };
-    const rest = productService.setProduct(data, data.serial);
+    let data = { name, serial, shelves };
+    const rest = warehouseService.setWarehouse(data, data.serial);
 
-    refreshProducts();
+    refreshWarehouses();
     openModal();
     return rest;
   };
 
   return (
     <form onSubmit={handleSubmit} autoComplete="new-password">
-      <p>Create Product</p>
+      <p>Create Warehouse</p>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Name</label>
         <input
@@ -37,16 +38,6 @@ export default function ProductCreate({ refreshProducts, openModal }) {
         <input
           onChange={(e) => setSerial(e.target.value)}
           value={serial}
-          className="border p-3"
-          type="text"
-          autoComplete="new-password"
-        />
-      </div>
-      <div className="flex flex-col py-2">
-        <label className="py-2 font-medium">Description</label>
-        <input
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
           className="border p-3"
           type="text"
           autoComplete="new-password"

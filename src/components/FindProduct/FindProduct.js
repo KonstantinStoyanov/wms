@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { WarehouseData } from "../../context/WarehouseContext";
-import ProductList from "../ProductList/ProductList";
-import ProductCreate from "../ProductCreate/ProductCreate";
+import ProductList from "../Product/ProductList/ProductList";
+import ProductCreate from "../Product/ProductCreate/ProductCreate";
+import Header from "../Header/Header";
+
 const FindProduct = () => {
   const [inputText, setInputText] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -26,6 +28,7 @@ const FindProduct = () => {
   };
   return (
     <>
+      <Header text={"Find Product or Create new"} />
       <>
         <button onClick={openModal}>Create warehouse</button>
         {showModal ? (
