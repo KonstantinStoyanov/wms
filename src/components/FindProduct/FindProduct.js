@@ -19,34 +19,6 @@ const FindProduct = () => {
     return products.filter((product) =>
       product.name.toLowerCase().includes(name.toLowerCase())
     );
-    // const results = products.filter((el) => {
-    //   return el.name.toLowerCase().includes(name.toLowerCase());
-    // });
-    // const results = products.filter((object) =>
-    //   Object.values(object).some(
-    //     (i) => i.name.toLowerCase() === name.toLowerCase()
-    //     // i.toLowerCase().includes(name.toLowerCase())
-    //   )
-    // );
-    // console.log(results);
-
-    // console.log(name);
-    // console.log(typeof products);
-    // products.filter((el) => {
-    //   //if no input the return the original
-    //   if (products.input === "") {
-    //     console.log(el, "No products");
-    //     return el;
-    //   }
-    //   //return the item which contains the user input
-    //   else {
-    //     console.log(
-    //       products.name.toLowerCase().includes(product.toLowerCase()),
-    //       "results"
-    //     );
-    //     return products.name.toLowerCase().includes(product.toLowerCase());
-    //   }
-    // });
   };
   const handleSearch = (e) => {
     setInputText(e.target.value);
