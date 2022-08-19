@@ -29,8 +29,35 @@ const MoveProduct = () => {
   };
   const handleSubmitMove = (e) => {
     e.preventDefault();
-    console.log(selectedProducts);
+    console.log(warehouses);
+    console.log(shelf);
+    let currentShelf;
+    const result = warehouses.forEach((warehouse) =>
+      warehouse.shelves.forEach((element) => {
+        if (element.serial === shelf) {
+          return (currentShelf = warehouse);
+        }
+      })
+    );
+    console.log(currentShelf);
+    // const result = .find(({ element }) => {
+    //   return console.log(element);
+    // });
+    // warehouses.forEach((element) => console.log(element));
+    // const currentShelf = warehouses.find()
+    // warehouses.forEach((element) => {
+    //   console.log();
+    //   element.shelves.forEach((a) => {
+    //     console.log(a.serial, a.serial === shelf);
+    //   });
+
+    // element.forEach((shelfe) => console.log(shelfe.serial));
+    // });
+    // let data = { name, serial };
+    // const rest = warehouseService.updateWarehouse(data, id);
+    // console.log(selectedProducts);
   };
+
   return (
     <>
       <Header text={"Move Product"} />

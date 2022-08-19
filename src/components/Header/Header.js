@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 const Header = ({ text }) => {
   return (
-    <div class="header">
+    <div className="header">
       <Link to={-1}>
         <svg
           width="30"

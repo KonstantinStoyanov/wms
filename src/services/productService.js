@@ -21,7 +21,6 @@ const productService = async (method, newData, id) => {
       case "getAll":
         data = await getDocs(productsCollectionRef);
 
-        // setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         return (data = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
 
       case "get":
