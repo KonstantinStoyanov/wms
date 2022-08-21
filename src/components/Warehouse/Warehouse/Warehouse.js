@@ -10,8 +10,13 @@ const Warehouse = ({ warehouse }) => {
 
   return (
     <>
-      <div onClick={handleShowShelf}>
-        {warehouse.name} - {warehouse.serial}
+      <div onClick={handleShowShelf} className="selected-item flex-item">
+        <p>
+          name: <span>{warehouse.name}</span>
+        </p>
+        <p>
+          serial: <span>{warehouse.serial}</span>
+        </p>
       </div>
       {showShelf ? (
         <ShelvesList shelves={warehouse.shelves} warehouse={warehouse} />

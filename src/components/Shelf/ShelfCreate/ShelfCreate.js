@@ -21,8 +21,12 @@ export default function ShelfCreate({ refreshWarehouses, openModal, id }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="new-password">
-      <p>Create Warehouse</p>
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="new-password"
+      className="create-form"
+    >
+      <p>Create Shelf</p>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Name</label>
         <input

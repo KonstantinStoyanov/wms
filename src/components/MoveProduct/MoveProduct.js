@@ -2,12 +2,27 @@ import { WarehouseData } from "../../context/WarehouseContext";
 import { useState } from "react";
 import SelectedProducts from "../SelectedProducts/SelectedProducts";
 import Header from "../Header/Header";
+import { auth, db } from "../../firebase";
+import {
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  deleteField,
+  updateDoc,
+  deleteDoc,
+  collection,
+  arrayUnion,
+} from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+
 const MoveProduct = () => {
   const [serial, setSerial] = useState("");
   const { products, warehouses, users, updateValues } = WarehouseData();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState("");
   const [shelf, setShelf] = useState("");
+  const navigate = useNavigate();
   console.log(selectedProducts);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,41 +46,69 @@ const MoveProduct = () => {
     e.preventDefault();
     console.log(warehouses);
     console.log(shelf);
-    let currentShelf;
-    const result = warehouses.forEach((warehouse) =>
+    let currentShelf = {};
+    const result = warehouses.forEach((warehouse) => {
+      console.log(warehouse);
       warehouse.shelves.forEach((element) => {
         if (element.serial === shelf) {
-          return (currentShelf = warehouse);
+          const response = setDoc(doc(db, "location", shelf), {
+            selectedProducts,
+          });
+          navigate("/move-product");
+          return;
         }
-      })
-    );
-    console.log(currentShelf);
-    // const result = .find(({ element }) => {
-    //   return console.log(element);
-    // });
-    // warehouses.forEach((element) => console.log(element));
-    // const currentShelf = warehouses.find()
-    // warehouses.forEach((element) => {
-    //   console.log();
-    //   element.shelves.forEach((a) => {
-    //     console.log(a.serial, a.serial === shelf);
-    //   });
-
-    // element.forEach((shelfe) => console.log(shelfe.serial));
-    // });
-    // let data = { name, serial };
-    // const rest = warehouseService.updateWarehouse(data, id);
-    // console.log(selectedProducts);
+      });
+    });
   };
 
   return (
     <>
       <Header text={"Move Product"} />
       <div className="input-section">
-        <form onSubmit={handleSubmit} autoComplete="new-password">
-          <p>Create Product</p>
+        <form
+          onSubmit={handleSubmit}
+          autoComplete="new-password"
+          className="scan-product"
+        >
           <div className="flex flex-col py-2">
-            <label className="py-2 font-medium">Serial</label>
+            <label className="">
+              <div>
+                {" "}
+                <p className="label-header">
+                  {" "}
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                  >
+                    <rect width="20" height="20" fill="url(#barcode)" />
+                    <defs>
+                      <pattern
+                        id="barcode"
+                        patternContentUnits="objectBoundingBox"
+                        width="1"
+                        height="1"
+                      >
+                        <use
+                          xlinkHref="#image0_22_553"
+                          transform="scale(0.02)"
+                        />
+                      </pattern>
+                      <image
+                        id="image0_22_553"
+                        width="50"
+                        height="50"
+                        xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABZklEQVRoge2Zvy9DURSAv6NDCY29Kv4AiU0rFoni/xCJP1GpySKtMBisJIKR6mQgx/BeeD1575btNDnfdH7dc+83XwiCIJglJNVU1TVgAzgXkQ/T2wYQkUtTrwNdYNGs+wKGIvJs5leADlADHkTk2vQXgD3gVkQe/+g1sWBVVceacWZ6x/rLken1tJqRqjaLEnmtyKHZ18/rY1VtVb13LuGyCTTyuGt6u4V43/RsXmQZ2CrknbxW5KDirgbQrlqcEqlVxPac3WFn/7O3rDZtvvQRM0uIeCNEvBEi3ggRb4SIN0LEGyHijRDxRoh4I0S8ESLeCBFvhIg3QsQbIeKNlMhnRQzZN1pZXJZbUmfLaql3/JASGQJvedwzvWJ+Ynr9xM4RMDB3vJuZ04r81ZydYNpnaAtYBy5KPkPbACJyZep1su+yJbPuCxiIyIuZb5J9x9WAexG5Mf15YAe4E5Gn1HuDIAhmh2/qja9CqQqFSQAAAABJRU5ErkJggg=="
+                      />
+                    </defs>
+                  </svg>
+                  Scan product serial
+                </p>
+              </div>
+            </label>
             <input
               onChange={(e) => setSerial(e.target.value)}
               value={serial}
@@ -75,15 +118,13 @@ const MoveProduct = () => {
             />
           </div>
           {errors !== "" ? <div>{errors}</div> : ""}
-          <button className="border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white">
-            Add
-          </button>
+          <button className="manual-add-btn">Add</button>
         </form>
       </div>
 
-      <div className="input-section">
+      <ul className="selected-container">
         <SelectedProducts selectedProducts={selectedProducts} />
-      </div>
+      </ul>
 
       <div
         className={`move-products ${

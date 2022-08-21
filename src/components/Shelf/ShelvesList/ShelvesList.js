@@ -12,9 +12,11 @@ const ShelvesList = ({ shelves, warehouse }) => {
   };
   console.log(shelves);
   return (
-    <>
-      <>{warehouse.serial}</>
-      <ul>
+    <div className="shelf-container">
+      <h3 style={{ textAlign: "center", paddingTop: "20px" }}>
+        Shelves in warehouse {warehouse.serial}
+      </h3>
+      <ul className="shelf-container">
         {shelves
           ? shelves.map((shelf) => (
               <li key={shelf.serial}>
@@ -25,7 +27,7 @@ const ShelvesList = ({ shelves, warehouse }) => {
           : null}
       </ul>
       <>
-        <button onClick={openModal}>Create Shelf</button>
+        {" "}
         {showModal ? (
           <ShelfCreate
             openModal={openModal}
@@ -33,8 +35,11 @@ const ShelvesList = ({ shelves, warehouse }) => {
             id={warehouse.serial}
           />
         ) : null}
+        <button onClick={openModal} className="btn-submit secondary">
+          {showModal ? "Close Create shelf" : "Create shelf"}
+        </button>
       </>
-    </>
+    </div>
   );
 };
 export default ShelvesList;

@@ -14,7 +14,7 @@ const userService = async (method, userId, data) => {
   const userCollectionRef = doc(db, "users", userId);
   try {
     let response;
-    let data;
+
     // let userCollectionRef;
     switch (method) {
       case "get":

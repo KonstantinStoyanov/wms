@@ -10,8 +10,8 @@ export default function ProductCreate({ refreshProducts, openModal }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(name, serial);
-    let shelves = [];
-    let data = { name, serial, description, shelves };
+
+    let data = { name, serial, description };
     const rest = productService.setProduct(data, data.serial);
 
     refreshProducts();
@@ -20,7 +20,11 @@ export default function ProductCreate({ refreshProducts, openModal }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="new-password">
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="new-password"
+      className="create-form"
+    >
       <p>Create Product</p>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Name</label>

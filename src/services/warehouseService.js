@@ -39,8 +39,16 @@ const warehouseService = async (method, newData, id) => {
         console.log("update");
 
         response = updateDoc(warehousesCollectionCurrentRef, {
-          shelves: arrayUnion({ id: newData.serial, data: newData }),
+          shelves: arrayUnion({ id: newData.serial, ...newData }),
         });
+        // console.log(newData);
+        // response = setDoc(
+        //   doc(db, `warehouses/${id}/shelves`, newData.serial),
+        //   {
+        //     ...newData,
+        //     id: newData.serial,
+        //   }
+        // );
         break;
       case "delete":
         console.log("delete");

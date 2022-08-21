@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Login from "../Login/Login";
 import CreateUser from "../CreateUser/CreateUser";
+import Header from "../Header/Header";
 const AuthPage = (props) => {
   const [showLogin, setShowLogin] = useState(true);
   const handleShowLogin = () => {
@@ -13,6 +14,8 @@ const AuthPage = (props) => {
   );
   return (
     <>
+      {" "}
+      <Header text={"Login or Sign up"} />
       {state?.showAuth && state.showAuth ? (
         <>Please Login to see this page</>
       ) : (
@@ -24,19 +27,6 @@ const AuthPage = (props) => {
         <CreateUser handleShowLogin={handleShowLogin} />
       )}
     </>
-
-    //     { showLogin ? (
-    //    <Login handleShowLogin={handleShowLogin} />
-
-    //   ) : (
-    //     <CreateUser handleShowLogin={handleShowLogin} />
-    //  ) }
-    //     { showLogin ? (
-    //     <Login handleShowLogin={handleShowLogin} />
-
-    //   ) : (
-    //     <CreateUser handleShowLogin={handleShowLogin} />
-    //  ) } )
   );
 };
 export default AuthPage;

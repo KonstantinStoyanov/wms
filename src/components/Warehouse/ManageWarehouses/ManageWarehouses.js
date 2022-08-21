@@ -18,23 +18,42 @@ export default function ManageWarehouses() {
   const openModal = () => {
     setShowModal((prev) => !prev);
   };
+  const addButtonStyle = {
+    fontSize: "16px",
+    lineHeight: "22px",
+    padding: "12px",
+    width: "fit-content",
+  };
   return (
-    <>
-      <Header text={"Manage Warehouses"} />
-      <div>
+    <div className="container">
+      <div className="main">
+        <Header text={"Manage Warehouses"} />
         <>
-          <button onClick={openModal}>Create warehouse</button>
-          {showModal ? (
-            <WarehouseCreate
-              openModal={openModal}
-              refreshWarehouses={refreshWarehouses}
-            />
-          ) : null}
+          <div>
+            <h2 style={{ margin: "0 auto", textAlign: "center" }}>
+              Warehouses List
+            </h2>
+            <ul className="selected-container">
+              <WarehousesList warehouses={warehouses} />
+            </ul>
+          </div>
+          <>
+            {showModal ? (
+              <WarehouseCreate
+                openModal={openModal}
+                refreshWarehouses={refreshWarehouses}
+              />
+            ) : null}
+          </>
+          <button
+            onClick={openModal}
+            className="btn-submit"
+            style={addButtonStyle}
+          >
+            {showModal ? "Close Create warehouse" : "Create warehouse"}
+          </button>
         </>
-        <ul>
-          <WarehousesList warehouses={warehouses} />
-        </ul>
       </div>
-    </>
+    </div>
   );
 }

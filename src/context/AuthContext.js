@@ -34,6 +34,7 @@ export const AuthContextProvider = ({ children }) => {
         name: name,
         type: type,
       });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

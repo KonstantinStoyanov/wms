@@ -27,35 +27,40 @@ const FindProduct = () => {
     setSearchText(filteredData(e.target.value));
   };
   return (
-    <>
-      <Header text={"Find Product or Create new"} />
-      <>
-        <button onClick={openModal}>Create warehouse</button>
-        {showModal ? (
-          <ProductCreate
-            openModal={openModal}
-            refreshProducts={refreshProducts}
+    <div className="container">
+      <div className="main">
+        <Header text={"Find Product or Create new"} />
+
+        <div className="product-search">
+          <h3>Find Product</h3>
+          <input
+            type="text"
+            id="inputText"
+            placeholder="Enter Products"
+            onChange={(e) => handleSearch(e)}
           />
-        ) : null}
-      </>
-      <div className="product-search">
-        <h1>Find Product</h1>
-        <input
-          type="text"
-          id="inputText"
-          placeholder="Enter Products"
-          onChange={(e) => handleSearch(e)}
-        />
+        </div>
+        {/* <ProductList products={products} /> */}
+        <div className="product-container">
+          {searchText === "" ? (
+            <ProductList products={products} />
+          ) : (
+            <ProductList products={searchText} />
+          )}
+        </div>
+        <>
+          {showModal ? (
+            <ProductCreate
+              openModal={openModal}
+              refreshProducts={refreshProducts}
+            />
+          ) : null}
+          <button onClick={openModal} className="btn-submit">
+            {showModal ? "Close Create product" : "Create product"}
+          </button>
+        </>
       </div>
-      {/* <ProductList products={products} /> */}
-      <div className="product-container">
-        {searchText === "" ? (
-          <ProductList products={products} />
-        ) : (
-          <ProductList products={searchText} />
-        )}
-      </div>
-    </>
+    </div>
   );
 };
 export default FindProduct;

@@ -21,7 +21,11 @@ export default function WarehouseCreate({ refreshWarehouses, openModal }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="new-password">
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="new-password"
+      className="create-form"
+    >
       <p>Create Warehouse</p>
       <div className="flex flex-col py-2">
         <label className="py-2 font-medium">Name</label>
