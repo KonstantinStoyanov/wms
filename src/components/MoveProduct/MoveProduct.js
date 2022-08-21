@@ -44,11 +44,9 @@ const MoveProduct = () => {
   };
   const handleSubmitMove = (e) => {
     e.preventDefault();
-    console.log(warehouses);
-    console.log(shelf);
+
     let currentShelf = {};
     const result = warehouses.forEach((warehouse) => {
-      console.log(warehouse);
       warehouse.shelves.forEach((element) => {
         if (element.serial === shelf) {
           const response = setDoc(doc(db, "location", shelf), {
@@ -117,7 +115,11 @@ const MoveProduct = () => {
               autoComplete="new-password"
             />
           </div>
-          {errors !== "" ? <div>{errors}</div> : ""}
+          {errors !== "" ? (
+            <div style={{ color: "#fc3a3a" }}>{errors}</div>
+          ) : (
+            ""
+          )}
           <button className="manual-add-btn">Add</button>
         </form>
       </div>
